@@ -1,0 +1,19 @@
+﻿@model m21_e2_WEB.ViewModels.CreateUserViewModel
+@{
+    ViewBag.Title = "Добавление пользователя";
+}
+<form asp-action="CreateUser" asp-controller="Users">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="UserName" class="control-label">Логин</label>
+        <input type="text" asp-for="UserName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label">Пароль</label>
+        <input type="password" asp-for="Password" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Добавить" class="btn btn-sm btn-secondary" />
+    </div>
+</form>

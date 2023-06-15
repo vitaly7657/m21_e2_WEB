@@ -1,0 +1,27 @@
+﻿@model List<m21_e2_WEB.Models.User>
+@{
+    ViewBag.Title = "Список пользователей";
+}
+
+<form method="get" asp-controller="Users" asp-action="Create">
+    <button type="submit" class="btn btn-sm btn-primary">Добавить пользователя</button>
+</form>
+
+<table class="table">
+    <tr><th>Логин</th><th></th></tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>
+                <form method="get" asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id">
+                    <button type="submit" class="btn btn-sm btn-primary">Изменить</button>
+                </form>
+
+                <form method="post" asp-controller="Users" asp-action="DeleteUser" asp-route-id="@user.Id">
+                    <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

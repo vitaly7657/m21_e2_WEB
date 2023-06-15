@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Все абоненты";
+}
+
+<h2>Телефонная книга</h2>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>Текущий пользователь: @User.Identity.Name</p>
+
+    <form method="post" asp-controller="Account" asp-action="Logout">
+        <input type="submit" value="Выход" class="btn btn-sm btn-primary" />
+    </form>
+    @if (User.Identity.Name == "admin")
+
+    {
+        <form method="post" asp-controller="Users" asp-action="Index">
+            <input type="submit" value="Управление пользователями" class="btn btn-sm btn-primary" />
+        </form>
+    }
+
+    @model IEnumerable<m21_e2_WEB.Models.Subscriber>
+
+
+    <form method="get" asp-controller="Subscribers" asp-action="Create">
+        <input type="submit" value="Добавить абонента" class="btn btn-sm btn-primary" />
+    </form>
+
+    <table class="table">
+        <tr>
+            <td>ID</td>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>Отчество</td>
+            <td>Номер телефона</td>
+            <td>Адрес</td>
+            <td>Описание</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Surname</td>
+                <td>@item.Patronymic</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Address</td>
+                <td>@item.Description</td>
+                <td>
+                    @if (User.Identity.Name == "admin")
+                    {
+                        <form method="get" asp-controller="Subscribers" asp-action="Edit" asp-route-id="@item.Id">
+                            <input type="submit" value="Изменить" class="btn btn-sm btn-primary" />
+                        </form>
+
+                        <form method="post" asp-controller="Subscribers" asp-action="DeleteSubscriber" asp-route-id="@item.Id">
+                            <input type="submit" value="Удалить" class="btn btn-sm btn-danger" />
+                        </form>
+                    }
+
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <form method="get" asp-controller="Account" asp-action="Login">
+        <input type="submit" value="Вход" class="btn btn-sm btn-primary" />
+    </form>
+
+    <form method="get" asp-controller="Account" asp-action="Register">
+        <input type="submit" value="Регистрация" class="btn btn-sm btn-primary" />
+    </form>
+
+
+    <table class="table">
+        <tr>
+            <td>ID</td>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>Отчество</td>
+            <td>Номер телефона</td>
+            <td>Адрес</td>
+            <td>Описание</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Surname</td>
+                <td>@item.Patronymic</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Address</td>
+                <td>@item.Description</td>
+            </tr>
+        }
+    </table>
+}
